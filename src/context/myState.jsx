@@ -72,31 +72,33 @@ function MyState(props) {
   const edithandle = (item) => {
     setProducts(item);
   };
+
   // update product
-  const updateProduct = async (item) => {
+  const updateProduct = async () => {
     setLoading(true);
     try {
       await setDoc(doc(fireDb, "products", products.id), products);
       toast.success("Product Updated successfully");
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 800);
       getProductData();
       setLoading(false);
-      window.location.href = "/dashboard";
     } catch (error) {
-      setLoading(false);
       console.log(error);
+      setLoading(false);
     }
-    setProducts("");
   };
 
   const deleteProduct = async (item) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      await deleteDoc(doc(fireDb, "products", item.id));
+      await deleteDoc(doc(fireDB, "products", item.id));
       toast.success("Product Deleted successfully");
-      setLoading(false);
       getProductData();
+      setLoading(false);
     } catch (error) {
-      // toast.success('Product Deleted Falied')
+      console.log(error);
       setLoading(false);
     }
   };
@@ -123,6 +125,7 @@ function MyState(props) {
       console.log(error);
       setLoading(false);
     }
+    console.log(productsArray);
   };
 
   useEffect(() => {

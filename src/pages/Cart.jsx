@@ -23,9 +23,11 @@ function Cart() {
     setTotalAmount(temp);
     console.log(temp);
   }, [cartItems]);
+
   const a = totalAmount / 10;
-  const shipping = parseInt(a); 
-  const grandTotal = shipping + totalAmount;
+  const shipping = parseInt(a);
+  const deposit = shipping/0.02;
+  const grandTotal = shipping + totalAmount + deposit;
 
   // add to cart
   const deleteCart = (item) => {
@@ -72,7 +74,7 @@ function Cart() {
     console.log(addressInfo);
 
     var options = {
-      key: "",
+      key: "rzp_test_EqmTf7cyKE7Dal",
       key_secret: "",
       amount: parseInt(grandTotal * 100),
       currency: "INR",
@@ -199,13 +201,27 @@ function Cart() {
                 className="text-gray-700"
                 style={{ color: mode === "dark" ? "white" : "" }}
               >
-                Subtotal
+                Rent/Month
               </p>
               <p
                 className="text-gray-700"
                 style={{ color: mode === "dark" ? "white" : "" }}
               >
                 ₹{totalAmount}
+              </p>
+            </div>
+            <div className="flex justify-between mb-2">
+              <p
+                className="text-gray-700"
+                style={{ color: mode === "dark" ? "white" : "" }}
+              >
+                Security Deposit
+              </p>
+              <p
+                className="text-gray-700"
+                style={{ color: mode === "dark" ? "white" : "" }}
+              >
+                ₹{deposit}
               </p>
             </div>
             <div className="flex justify-between">

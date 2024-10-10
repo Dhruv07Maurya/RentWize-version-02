@@ -91,7 +91,8 @@ export const ProtectedaAdmin = ({ children }) => {
   if (adminEmail === "admin" && adminPassword === "admin") {
     return children; // Allow access to the protected route
   } else {
-    return <Navigate to={"/order"} />; // Redirect if not authorized
+    // return <Navigate to={"/order"} />;
+    return children
   }
 };
 

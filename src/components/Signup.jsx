@@ -4,6 +4,11 @@ import { toast } from "react-toastify";
 import myContext from "../context/myContext";
 import Loader from "./Loader";
 
+// Firebase imports
+import { auth, fireDb} from "../firebase/FirebaseConfig.jsx"// Adjust the import path based on your project structure
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+
 function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,44 +16,33 @@ function Signup() {
 
   const context = useContext(myContext);
   const { loading, setLoading } = context;
-  const navigate = useNavigate(); // Hook for navigation
 
-  const signup = () => {
+  const signup = async () => {
     setLoading(true);
-    
-    // Basic validation
     if (name === "" || email === "" || password === "") {
       setLoading(false);
       return toast.error("All fields are required");
     }
 
-    // Simple if-else authentication
-    const validEmail = "1234"; // Example email
-    const validPassword = "1234"; // Example password
+    try {
+      const users = await createUserWithEmailAndPassword(auth, email, password);
 
-    if (email === validEmail && password === validPassword) {
-      // Store email and password in local storage
-      localStorage.setItem("userEmail", email);
-      localStorage.setItem("userPassword", password);
-
+      const user = {
+        name: name,
+        uid: users.user.uid,
+        email: users.user.email,
+        time: Timestamp.now(),
+      };
+      const userRef = collection(fireDb, "users");
+      await addDoc(userRef, user);
       toast.success("Signup Successfully");
       setName("");
       setEmail("");
       setPassword("");
       setLoading(false);
-
-      // Redirect to default route
-      navigate("/"); // Redirect to the home page ("/")
-    } else if (email === "admin" && password === "admin") {
-      // Store admin credentials in local storage
-      localStorage.setItem("adminEmail", email);
-      localStorage.setItem("adminPassword", password);
-
-      setLoading(false);
-      toast.success("Admin Signup Successfully");
-      navigate("/");
-    } else {
-      toast.error("Invalid email or password.");
+    } catch (error) {
+      console.log(error);
+      toast.error("Signup Failed. Please try again.");
       setLoading(false);
     }
   };
@@ -72,7 +66,6 @@ function Signup() {
             placeholder="Name"
           />
         </div>
-
         <div>
           <input
             type="email"
@@ -102,7 +95,7 @@ function Signup() {
         </div>
         <div>
           <h2 className="text-white">
-            Have an account? {"   "}
+            Have an account{" "}
             <Link className="text-red-500 font-bold" to={"/login"}>
               Login
             </Link>

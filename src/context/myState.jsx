@@ -9,6 +9,9 @@ import {
   orderBy,
   query,
   getDocs,
+  setDoc,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 
@@ -25,6 +28,26 @@ function MyState(props) {
       document.body.style.backgroundColor = "white";
     }
   };
+
+  const [user, setUser] = useState([]);
+
+  const getUserData = async () => {
+      setLoading(true)
+      try {
+          const result = await getDocs(collection(fireDB, "users"))
+          const usersArray = [];
+          result.forEach((doc) => {
+              usersArray.push(doc.data());
+              setLoading(false)
+          });
+          setUser(usersArray);
+          console.log(usersArray)
+          setLoading(false);
+      } catch (error) {
+          console.log(error)
+          setLoading(false)
+      }
+  }
 
   const [products, setProducts] = useState({
     title: null,
@@ -93,7 +116,7 @@ function MyState(props) {
   const deleteProduct = async (item) => {
     setLoading(true);
     try {
-      await deleteDoc(doc(fireDB, "products", item.id));
+      await deleteDoc(doc(fireDb, "products", item.id));
       toast.success("Product Deleted successfully");
       getProductData();
       setLoading(false);
@@ -182,6 +205,7 @@ function MyState(props) {
         setFilterType,
         filterPrice,
         setFilterPrice,
+        user,setUser
       }}
     >
       {props.children}

@@ -27,7 +27,7 @@ export default function Navbar() {
     window.location.href = "/signup";
   };
 
-  const cartItems=useSelector((state)=>state.cart)
+  const cartItems = useSelector((state) => state.cart);
 
   return (
     <div className="bg-white sticky top-0 z-50  ">
@@ -237,7 +237,13 @@ export default function Navbar() {
                       Admin
                     </Link>
                   ) : (
-                    ""
+                    <Link
+                      to={"/dashboard"}
+                      className="text-sm font-medium text-gray-700 "
+                      style={{ color: mode === "dark" ? "white" : "" }}
+                    >
+                      Admin
+                    </Link>
                   )}
 
                   <a

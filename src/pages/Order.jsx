@@ -2,12 +2,23 @@ import React, { useContext } from "react";
 import myContext from "../context/myContext";
 import Layout from "../components/Layout";
 import Loader from "../components/Loader";
-import { Timestamp, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
-import { toast } from 'react-toastify';
+import {
+  Timestamp,
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+} from "firebase/firestore";
+import { toast } from "react-toastify";
 
 function Order() {
   // const userid = JSON.parse(localStorage.getItem('userEmail')).user.uid
-  const storedUser = localStorage.getItem('userEmail');
+  const storedUser = localStorage.getItem("userEmail");
   const userEmail = storedUser ? JSON.parse(storedUser) : null;
   const userid = userEmail?.user?.uid;
 
@@ -83,5 +94,30 @@ function Order() {
     </Layout>
   );
 }
-
 export default Order;
+
+///for maps for tracking order;
+
+// import { Map, GoogleApiWrapper } from "google-maps-react";
+// import Navbar from "../components/Navbar";
+
+// function Order(props) {
+//   return (
+//     <>
+//       <Navbar/>
+//       <Map
+//         google={props.google} // Use props directly
+//         style={{ width: "100%", height: "100%" }}
+//         zoom={10}
+//         initialCenter={{
+//           lat: 28.704060,
+//           lng: 77.102493,
+//         }}
+//       />
+//     </>
+//   );
+// }
+
+// export default GoogleApiWrapper({
+//   apiKey: "IzaSyBSet8X1UrVWi7JjgaScdai-C9pTSxg",
+// })(Order);

@@ -8,8 +8,10 @@ import Layout from "./Layout";
 import { addToCart } from "../redux/cartSlice";
 import { fireDb } from "../firebase/FirebaseConfig";
 import ReactImageMagnify from "react-image-magnify";
+import Review from "./Review";
 
 function ProductInfo() {
+
   const context = useContext(myContext);
   const { loading, setLoading } = context;
 
@@ -213,6 +215,7 @@ function ProductInfo() {
             </div>
           )}
         </div>
+      <Review></Review>
       </section>
     </Layout>
   );

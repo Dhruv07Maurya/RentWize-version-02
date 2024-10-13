@@ -14,7 +14,11 @@ function Cart() {
   const cartItems = useSelector((state) => state.cart);
   console.log(cartItems);
 
-  const [totalAmount, setTotalAmount] = useState(0);
+  let [totalAmount, setTotalAmount] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const handleDiscountChange = (event) => {
+    setDiscount(event.target.value);
+  };
   useEffect(() => {
     let temp = 0;
     cartItems.forEach((cartItem) => {
@@ -25,10 +29,12 @@ function Cart() {
   }, [cartItems]);
 
   const a = totalAmount / 10;
-  const shipping = parseInt(a);
-  const deposit = shipping/0.02;
-  const grandTotal = shipping + totalAmount + deposit;
-
+  let shipping = parseInt(a);
+  const deposit = shipping / 0.02;
+  totalAmount=totalAmount-(discount/100)*totalAmount
+  let grandTotal = shipping + totalAmount + deposit;
+  grandTotal > 20000 ? (shipping = 0) : shipping;
+  grandTotal = shipping + totalAmount + deposit;
   // add to cart
   const deleteCart = (item) => {
     dispatch(deleteFromCart(item));
@@ -255,6 +261,21 @@ function Cart() {
                 </p>
               </div>
             </div>
+            <select
+              id="discount"
+              name="discount"
+              onChange={handleDiscountChange}
+              value={discount}
+              className="mt-1 bg-zinc-50 mb-3 block w-full px-2 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            >
+              <option value="0">Less than 5 months (0%)</option>
+              <option value="3">More than 5 months (3%)</option>
+              <option value="6">More than 1 year (6%)</option>
+              <option value="7">More than 1.5 year (7%)</option>
+              <option value="10">For 2 years (10%)</option>
+              {console.log(discount)}
+            </select>
             {/* <Modal  /> */}
             <Modal
               name={name}

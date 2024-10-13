@@ -84,16 +84,19 @@ export const UserProtected = ({ children }) => {
 //admin protected route
 
 export const ProtectedaAdmin = ({ children }) => {
-  const adminEmail = localStorage.getItem("adminEmail");
+  const userData = localStorage.getItem("user");
+  const userObject = JSON.parse(userData);
+  const email = userObject.user.providerData[0].email;
   const adminPassword = localStorage.getItem("adminPassword");
 
   // Check if the stored credentials match the admin credentials
-  if (adminEmail === "admin" && adminPassword === "admin") {
+  if (email === "admin@gmail.com") {
     return children; // Allow access to the protected route
   } else {
-    // return <Navigate to={"/order"} />;
-    return children
+    return <NoPage />;
+    // return children
   }
 };
+
 
 // export default ProtectedaAdmin;

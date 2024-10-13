@@ -24,10 +24,13 @@ export default function Navbar() {
     localStorage.clear("userEmail");
     localStorage.clear("userEmail");
     localStorage.clear("userEmail");
-    window.location.href = "/signup";
+    window.location.href = "/login";
   };
 
   const cartItems = useSelector((state) => state.cart);
+  const userData = localStorage.getItem('user');
+  const userObject = JSON.parse(userData);
+  const email = userObject.user.providerData[0].email;
 
   return (
     <div className="bg-white sticky top-0 z-50  ">
@@ -92,7 +95,7 @@ export default function Navbar() {
                   </div>
 
                   <div className="flow-root">
-                    {aEmaill === "admin" ? (
+                    {email === "admin@gmail.comm" ? (
                       <Link
                         to={"/dashboard"}
                         className="-m-2 block p-2 font-medium text-gray-900"
@@ -119,11 +122,7 @@ export default function Navbar() {
                       to={"/"}
                       className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
                     >
-                      <img
-                        className="inline-block w-10 h-10 rounded-full"
-                        src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                        alt="Dan_Abromov"
-                      />{" "}
+                     {email}
                     </Link>
                   </div>
                 </div>
@@ -159,7 +158,7 @@ export default function Navbar() {
             color: mode === "dark" ? "white" : "",
           }}
         >
-          Get free delivery on orders over ₹5000
+          Get free delivery on orders over ₹20000
         </p>
 
         <nav
@@ -228,7 +227,7 @@ export default function Navbar() {
                   >
                     Order
                   </Link>
-                  {aEmaill === "admin" ? (
+                  {email === "admin@gmail.comm" ? (
                     <Link
                       to={"/dashboard"}
                       className="text-sm font-medium text-gray-700 "
@@ -272,11 +271,7 @@ export default function Navbar() {
                 </div>
                 <div className="hidden lg:ml-8 lg:flex">
                   <a href="#" className="flex items-center text-gray-700 ">
-                    <img
-                      className="inline-block w-10 h-10 rounded-full"
-                      src="https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg"
-                      alt="Dan_Abromov"
-                    />
+                  {email}
                   </a>
                 </div>
 

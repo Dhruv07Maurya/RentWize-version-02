@@ -58,5 +58,6 @@ Instructions for setting up the project locally.
 2. Install dependencies: `npm install`
 3. Install all necessary dependencies
 4. Start the development server: `npm start`
+5. Go to /signup page and start using. 
 
 
